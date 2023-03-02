@@ -16,6 +16,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
     try {
         // console.log("token inside try")
+        //Bearer Token-The code is used to retrieve the token from a user’s authorization header.
       token = req.headers.authorization.split(" ")[1];
 
       //decodes token id
