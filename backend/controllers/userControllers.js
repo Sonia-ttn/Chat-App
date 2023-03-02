@@ -2,7 +2,8 @@ const asyncHandler=require("express-async-handler")
 const User=require("../models/userModel")
 const generateToken=require("../config/generateToken")
 const bcrypt=require("bcryptjs")
-//REGISTRATION API
+
+//REGISTRATION API-(/api/user/reg)
 const registerUser=asyncHandler(async(req,res)=>{
     const {name,email,password,pic}=req.body;
     const salt=await bcrypt.genSalt(10);
@@ -39,7 +40,7 @@ const registerUser=asyncHandler(async(req,res)=>{
     }
 });
 
-//LOGIN API
+//LOGIN API -(/api/user/login)
 const authUser=asyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     const user=await User.findOne({email});
@@ -63,5 +64,21 @@ const authUser=asyncHandler(async(req,res)=>{
     }
 }    
 )
+//GET ALL USERS - (/api/user/?search=alex)
+const allUsers=asyncHandler(async(req,res)=>{
+    const key=req.query.search ? {
+        $or:[
+            //options:i - for case insensitive(upper/lower case)
+            {name:{$regex:req.query.search,$options:"i"}},
+            {email:{$regex:req.query.search,$options:"i"}}
+        ]
+    }:{};
+    // console.log(key);
+    const users=await User.find(key)
 
-module.exports={registerUser,authUser}
+    .find({_id: { $ne:req.user._id}})
+    res.send(users)
+}   
+)
+
+module.exports={registerUser,authUser,allUsers}

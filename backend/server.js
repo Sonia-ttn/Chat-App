@@ -6,6 +6,7 @@ const connectDB=require("./config/db")
 const cors=require("cors");
 const PORT=process.env.PORT||5000;
 const userRoutes=require("./routes/userRoutes")
+const chatRoutes=require("./routes/chatRoutes")
 dotenv.config();
 connectDB();
 
@@ -17,6 +18,8 @@ app.get("/",(req,res)=>{
     res.send("hello api")
 })
 app.use("/api/user",userRoutes);
+app.use("/api/chat",chatRoutes);
+
 // app.get("/api/chat",(req,res)=>{
 //     res.send(chats)
 //     console.log(chats);
