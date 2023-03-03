@@ -16,11 +16,12 @@ import { useNavigate } from "react-router-dom";
 function Homepage() {
   const nav=useNavigate();
   useEffect(()=>{
-    const user=JSON.parse(localStorage.getItem('userInfo'))
+const user=JSON.parse(localStorage.getItem('userInfo'))
     if(user){
       nav("/chats")
     }
   },[nav])
+  
   return (
     <Container maxW="xl" centerContent>
       <Box

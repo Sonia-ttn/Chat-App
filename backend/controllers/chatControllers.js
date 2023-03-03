@@ -102,7 +102,7 @@ const accessChat = asyncHandler(async(req, res) => {
  }
   )
 
-//
+//create group chat
 const createGroup=asyncHandler(async(req,res)=>{
 
   if(!req.body.users||!req.body.name){
